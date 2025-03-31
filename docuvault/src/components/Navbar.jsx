@@ -23,7 +23,7 @@ const Navbar = () => {
           {["Library", "Domains", "Upload"].map((item, index) => (
             <li
               key={index}
-              onClick={() => navigate("/")}
+              onClick={() => navigate(`/${item.toLowerCase()}`)}
               className="cursor-pointer relative transition-all duration-300 ease-in-out
                          after:content-[''] after:absolute after:left-0 after:bottom-[-3px] after:w-0 
                          after:h-[2px] after:bg-gray-800 after:transition-all after:duration-300 
