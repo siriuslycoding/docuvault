@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import Domains from './pages/Domains'
-// import Upload from './pages/Upload'
+import Upload from './pages/Upload'
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/domains' element={<Domains />} />
-        {/* <Route path='/upload' element={<Upload />} /> */}
+        <Route path='/upload' element={<Upload />} />
       </Routes>
       <Footer />
     </>

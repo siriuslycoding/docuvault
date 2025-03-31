@@ -2,51 +2,96 @@
 import React, { useState } from 'react';
 const a = [
   {
-    title: 'Artificial Intelligence',
-    img: 'https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fEFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2V8ZW58MHx8MHx8fDA%3D', // Replace with an AI-generated image URL
-    list: ['Subjects', 'Resources'],
-    info:"ancd",
-    sub:[
-    {name: "HTML Basics", link: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
-    {name: "HTML Basics", link: "https://developer.mozilla.org/en-US/docs/Web/HTML" }
-    ]
+    title: "Artificial Intelligence",
+    img: "https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=600&auto=format&fit=crop&q=60",
+    list: ["Subjects", "Resources"],
+    info: "Artificial Intelligence (AI) focuses on building systems that can learn, reason, and act autonomously.",
+    sub: [
+      { name: "Introduction to AI", link: "https://www.ibm.com/topics/artificial-intelligence" },
+      { name: "Machine Learning Basics", link: "https://www.coursera.org/learn/machine-learning" },
+      { name: "Deep Learning with TensorFlow", link: "https://www.tensorflow.org/tutorials" },
+    ],
   },
   {
-    title: 'Cybersecurity',
-    img: 'https://tse1.mm.bing.net/th?id=OIP.vFZXiFUX08VUgoqT9MZvrgHaE3&pid=Api&P=0&h=180',
-    list: ['Threat Analysis', 'Security Tools'],
+    title: "Cybersecurity",
+    img: "https://tse1.mm.bing.net/th?id=OIP.vFZXiFUX08VUgoqT9MZvrgHaE3&pid=Api&P=0&h=180",
+    list: ["Threat Analysis", "Security Tools"],
+    info: "Cybersecurity is the practice of protecting systems, networks, and data from cyber threats.",
+    sub: [
+      { name: "Cybersecurity Basics", link: "https://www.cybrary.it/course/intro-to-cyber-security/" },
+      { name: "OWASP Top 10 Security Risks", link: "https://owasp.org/www-project-top-ten/" },
+      { name: "Ethical Hacking", link: "https://www.udemy.com/course/learn-ethical-hacking-from-scratch/" },
+    ],
   },
   {
-    title: 'Cloud Computing',
-    img: 'https://files.oaiusercontent.com/file-QELBC7YnDiAVpoV3tW2DcQ?se=2025-03-07T18%3A24%3A03Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D2427248e-4ca4-4c56-91b3-4868f0a92307.webp&sig=UhR7gAX3Erd7eNvsUz4QSPkkJQlgpi9pwI9DePkhim4%3D',
-    list: ['AWS', 'Google Cloud'],
+    title: "Cloud Computing",
+    img: "https://files.oaiusercontent.com/file-QELBC7YnDiAVpoV3tW2DcQ...",
+    list: ["AWS", "Google Cloud"],
+    info: "Cloud computing delivers computing services over the internet, including storage, databases, and AI.",
+    sub: [
+      { name: "AWS Cloud Fundamentals", link: "https://aws.amazon.com/training/course-descriptions/cloud-practitioner-essentials/" },
+      { name: "Google Cloud Platform (GCP)", link: "https://cloud.google.com/training" },
+      { name: "Microsoft Azure Fundamentals", link: "https://learn.microsoft.com/en-us/certifications/azure-fundamentals/" },
+    ],
   },
   {
-    title: 'Blockchain Technology',
-    img: 'https://tse4.mm.bing.net/th?id=OIP.Vm_2qhj8oCnVDnl4qUXeSQHaE7&pid=Api&P=0&h=180',
-    list: ['Smart Contracts', 'Decentralization'],
+    title: "Blockchain Technology",
+    img: "https://tse4.mm.bing.net/th?id=OIP.Vm_2qhj8oCnVDnl4qUXeSQHaE7&pid=Api&P=0&h=180",
+    list: ["Smart Contracts", "Decentralization"],
+    info: "Blockchain is a distributed ledger technology that enables secure and transparent transactions.",
+    sub: [
+      { name: "Blockchain Basics", link: "https://www.ibm.com/topics/blockchain" },
+      { name: "Ethereum and Smart Contracts", link: "https://ethereum.org/en/developers/docs/smart-contracts/" },
+      { name: "Hyperledger Fabric", link: "https://hyperledger-fabric.readthedocs.io/en/latest/" },
+    ],
   },
   {
-    title: 'Quantum Computing',
-    img: 'https://th.bing.com/th/id/OIP.ZOAsuOBCJv_Pd50ApOLthAHaE8?w=255&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-    list: ['Qubits', 'Quantum Supremacy'],
+    title: "Quantum Computing",
+    img: "https://th.bing.com/th/id/OIP.ZOAsuOBCJv_Pd50ApOLthAHaE8?w=255&h=180",
+    list: ["Qubits", "Quantum Supremacy"],
+    info: "Quantum computing uses quantum mechanics to perform computations exponentially faster than classical computers.",
+    sub: [
+      { name: "Introduction to Quantum Computing", link: "https://quantum-computing.ibm.com/" },
+      { name: "Google's Quantum Supremacy", link: "https://ai.googleblog.com/2019/10/quantum-supremacy-using-programmable.html" },
+      { name: "Qiskit Tutorials (IBM Quantum)", link: "https://qiskit.org/learn/" },
+    ],
   },
   {
-    title: 'Internet of Things (IoT)',
-    img: 'https://th.bing.com/th/id/OIP.OWUK5m3mk7w-GLeruSC2cwHaFS?w=240&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-    list: ['Smart Devices', 'Embedded Systems'],
+    title: "Internet of Things (IoT)",
+    img: "https://th.bing.com/th/id/OIP.OWUK5m3mk7w-GLeruSC2cwHaFS?w=240&h=180",
+    list: ["Smart Devices", "Embedded Systems"],
+    info: "The Internet of Things (IoT) connects physical devices to the internet, enabling data collection and automation.",
+    sub: [
+      { name: "IoT Basics", link: "https://www.ibm.com/topics/internet-of-things" },
+      { name: "Arduino for IoT", link: "https://www.arduino.cc/en/Guide/Introduction" },
+      { name: "Raspberry Pi Projects", link: "https://projects.raspberrypi.org/en/" },
+    ],
   },
   {
-    title: 'Data Science',
-    img: 'https://th.bing.com/th/id/OIP.0hskNFaeTGIwwjOxLIbs5AHaEo?w=296&h=184&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-    list: ['Machine Learning', 'Big Data'],
+    title: "Data Science",
+    img: "https://th.bing.com/th/id/OIP.0hskNFaeTGIwwjOxLIbs5AHaEo?w=296&h=184",
+    list: ["Machine Learning", "Big Data"],
+    info: "Data Science involves extracting insights from structured and unstructured data using various techniques.",
+    sub: [
+      { name: "Data Science Roadmap", link: "https://towardsdatascience.com/the-2023-data-science-roadmap-36834cbf50b" },
+      { name: "Python for Data Science", link: "https://www.datacamp.com/courses/intro-to-python-for-data-science" },
+      { name: "Kaggle Datasets & Competitions", link: "https://www.kaggle.com/datasets" },
+    ],
   },
   {
-    title: 'Web Development',
-    img: 'https://tse4.mm.bing.net/th?id=OIP.vK2sTEwl57mqQ2_zuWaidwHaE8&pid=Api&P=0&h=180',
-    list: ['Frontend', 'Backend'],
+    title: "Web Development",
+    img: "https://tse4.mm.bing.net/th?id=OIP.vK2sTEwl57mqQ2_zuWaidwHaE8&pid=Api&P=0&h=180",
+    list: ["Frontend", "Backend"],
+    info: "Web development focuses on creating websites and web applications using frontend and backend technologies.",
+    sub: [
+      { name: "HTML, CSS, and JavaScript", link: "https://developer.mozilla.org/en-US/docs/Learn" },
+      { name: "React.js Guide", link: "https://react.dev/" },
+      { name: "Node.js and Express", link: "https://expressjs.com/" },
+    ],
   },
 ];
+
+
 
 
 const Card = ({ title, img, list,info,sub }) => 
@@ -87,20 +132,20 @@ const Card = ({ title, img, list,info,sub }) =>
                        
                                 {/* Pop-up */}
                                 {isenable && (
-                                  <div className="fixed inset-0 z-50 flex items-center justify-center">
+                                  <div className="fixed inset-0 z-50 flex items-center justify-center p-5 overflow-scroll  ">
                                     <div 
-                                      className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+                                      className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300  "
                                       onClick={close}
                                     />
-                                    <div className="relative bg-white p-6 rounded-lg shadow-2xl w-96 transform transition-all duration-300 scale-100 opacity-100">
+                                    <div className="relative bg-white p-6 rounded-lg shadow-2xl w-96 max-h-[80vh] overflow-auto transform transition-all duration-300 scale-100 opacity-100 mt-50">
                                       <button 
                                         onClick={close} 
-                                        className="absolute top-2 right-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-sm transition"
+                                        className="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-sm transition mt-2"
                                       >
                                         ✕
                                       </button>
 
-                                      <div className="text-center text-lg font-semibold mb-4">
+                                      <div className="text-center text-lg font-semibold mb-4 mt-5">
                                         {info}
                                       </div>
 
