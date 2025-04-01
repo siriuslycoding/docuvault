@@ -53,7 +53,6 @@ const Footer = () => {
           <h2 className="text-xl font-semibold mb-3 text-white">Contact Us</h2>
           <ul className="space-y-2 text-gray-300">
             <li onClick={()=>navigate('/faqs')} className=" cursor-pointer hover:text-white transition">FAQs</li>
-            <li className="">Support</li>
             <li>Phone: <a href="tel:+918484022348" className="hover:text-white transition">+91 84840 22348</a></li>
             <li>Email: <a href="mailto:harmpbl@gmail.com" className="hover:text-white transition">harmpbl@gmail.com</a></li>
           </ul>
