@@ -6,3 +6,34 @@
 
 /* Class based dark mode */
 @variant dark (&:where(.dark, .dark *));
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px; /* Adjust the height of the horizontal scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light gray track */
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #9ca3af ; /* Dark gray scrollbar */
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151; /* Darker on hover */
+  }
+  
+  /* Apply custom scrollbar only to the domain bar */
+  .custom-scrollbar {
+    overflow: auto;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
