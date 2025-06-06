@@ -1,6 +1,5 @@
-
-  
 import { useState } from "react";
+import axios from 'axios';
 
 const Upload = () => {
   const [formData, setFormData] = useState({
@@ -19,11 +18,35 @@ const Upload = () => {
     setFormData({ ...formData, document: e.target.files[0] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    alert("Document uploaded successfully!");
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.name);
+    formDataToSend.append("description", formData.author);
+    formDataToSend.append("domain", formData.date);
+    formDataToSend.append("file", formData.document);
+
+    try {
+      const res = await axios.post("http://localhost:8000/api/upload/", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("Document uploaded successfully!");
+    } catch (err) {
+      if (err.response) {
+        console.error("Upload error:", err.response.data);
+      } else {
+        console.error("Unexpected error:", err.message);
+      }
+      alert("Error uploading document.");
+    }
   };
+
+
+
 
   return (
     <div className="bg-gray-800 py-10 px-10 md:px-12 lg:px-20 mb-10 mx-auto mt-30 max-w-xl justify-center backdrop-blur-lg rounded-lg shadow-md text-gray-100">
