@@ -25,7 +25,7 @@ const a = [
   },
   {
     title: "Cloud Computing",
-    img: "https://files.oaiusercontent.com/file-QELBC7YnDiAVpoV3tW2DcQ...",
+    img: "https://tse4.mm.bing.net/th?id=OIP.ULexH7y0ortSo91XD7EoogHaE7&pid=Api&P=0&h=180",
     list: ["AWS", "Google Cloud"],
     info: "Cloud computing delivers computing services over the internet, including storage, databases, and AI.",
     sub: [

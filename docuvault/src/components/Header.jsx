@@ -1,7 +1,19 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const [query, setQuery] = useState('');
+    const navigate = useNavigate();
+  
+    const handleSearch = (e) => {
+      e.preventDefault();
+      if (query.trim() !== "") {
+        navigate(`/search?q=${encodeURIComponent(query)}`);
+      }
+    };
+
     return (
         <div
             className="flex flex-col items-center justify-center bg-gray-700 px-6 md:px-10 lg:px-20 
@@ -21,18 +33,19 @@ const Header = () => {
                     Seamless Document Accessibility
                 </p>
 
+                
                 <div className="flex justify-center mt-12">
-                    <form className="flex w-full max-w-[400px]">
-                        {/* Input Field */}
+                    <form onSubmit={handleSearch} className="flex w-full max-w-[400px]">
                         <input
                             type="text"
                             placeholder="Search a book ..."
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
                             className="w-full px-4 py-2 bg-gray-800 text-white rounded-l-full 
                                         focus:outline-none focus:border-gray-200 shadow-md"
                         />
-
-                        {/* Search Button */}
                         <button
+                            type="submit"
                             className="px-4 py-2 bg-white text-gray-800 rounded-r-full cursor-pointer
                                          hover:bg-gray-800 hover:text-white transition duration-300"
                         >
@@ -41,18 +54,54 @@ const Header = () => {
                     </form>
                 </div>
 
-
-                <a
-                    href="#speciality"
+                <button
+                    onClick={()=>navigate('/library')}
                     className="ml-auto bg-white text-gray-800 px-7 py-3 rounded-full text-sm font-medium cursor-pointer
                    hover:bg-gray-800 hover:text-white transition-all duration-300 shadow-md
                    mt-10 inline-block hover:scale-105"
                 >
                     Go To Library
-                </a>
+                </button>
             </div>
         </div>
     );
 };
 
 export default Header;
+
+// import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+
+// const Header = () => {
+//   const [query, setQuery] = useState('');
+//   const navigate = useNavigate();
+
+//   const handleSearch = (e) => {
+//     e.preventDefault();
+//     navigate(`/search?q=${encodeURIComponent(query)}`);
+//   };
+
+//   return (
+//     <div className="flex justify-center mt-12">
+//       <form onSubmit={handleSearch} className="flex w-full max-w-[400px]">
+//         <input
+//           type="text"
+//           placeholder="Search a book ..."
+//           value={query}
+//           onChange={(e) => setQuery(e.target.value)}
+//           className="w-full px-4 py-2 bg-gray-800 text-white rounded-l-full 
+//                      focus:outline-none focus:border-gray-200 shadow-md"
+//         />
+//         <button
+//           type="submit"
+//           className="px-4 py-2 bg-white text-gray-800 rounded-r-full cursor-pointer
+//                      hover:bg-gray-800 hover:text-white transition duration-300"
+//         >
+//           Search
+//         </button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Header;
