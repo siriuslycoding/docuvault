@@ -1,6 +1,6 @@
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated # ADD THIS
-from .serializers import RegisterSerializer, UserProfileSerializer # MODIFIED IMPORT
+from rest_framework.permissions import IsAuthenticated, AllowAny # ADD AllowAny
+from .serializers import RegisterSerializer, UserProfileSerializer
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -8,8 +8,8 @@ User = get_user_model()
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
+    permission_classes = [AllowAny] # <--- ADDED THIS LINE
 
-# ADD THIS NEW VIEW
 class UserProfileView(generics.RetrieveAPIView):
     """
     API endpoint that allows authenticated users to view their own profile.

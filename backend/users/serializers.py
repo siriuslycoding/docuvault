@@ -1,63 +1,77 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
-from documents.serializers import DocumentSerializer # Import the full DocumentSerializer now
+from documents.serializers import DocumentSerializer
 
 User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True)
-    # If you intend to have a 'full_name' during registration, uncomment/add it here:
-    full_name = serializers.CharField(write_only=True, required=False, allow_blank=True) # ADDED/MODIFIED
+    password = serializers.CharField(write_only=True, validators=[validate_password], style={'input_type': 'password'})
+    password2 = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    full_name = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
-        # Important: Since USERNAME_FIELD is 'email', we can register without a visible 'username' field.
-        # Django's AbstractUser still has a 'username' field, so we might need to populate it.
-        # For simplicity, we'll auto-generate or use email as username for AbstractUser's internal field.
-        fields = ('email', 'full_name', 'password', 'password2') # MODIFIED FIELDS
+        fields = ('full_name', 'email', 'password', 'password2')
         extra_kwargs = {
-            'email': {'required': True}, # Ensure email is always required
+            'email': {'required': True},
         }
 
     def validate(self, data):
         if data['password'] != data['password2']:
-            raise serializers.ValidationError("Passwords do not match.")
+            raise serializers.ValidationError({"password2": "Passwords do not match."})
         
-        # You can add more complex password validation here if needed
-        # validate_password(data['password'], user=User(**data)) # This would check against new user instance
+        if User.objects.filter(email=data['email']).exists():
+            raise serializers.ValidationError({"email": "User with this email already exists."})
+        
         return data
 
     def create(self, validated_data):
+        # Pop fields that are handled explicitly or are not direct model fields
+        full_name = validated_data.pop('full_name')
+        password = validated_data.pop('password')
         validated_data.pop('password2')
-        full_name = validated_data.pop('full_name', '') # Pop full_name if present
+        email = validated_data.pop('email') # <--- IMPORTANT: POP EMAIL HERE
 
-        # When USERNAME_FIELD is email, AbstractUser's 'username' field still exists
-        # We need to set it to something unique. Using email or a derivative is common.
-        # Or, if your custom User model truly removed the username field, then this is not needed.
-        # Assuming AbstractUser default username still exists:
-        username = validated_data.get('email', '').split('@')[0] # Use part of email as username
-        if User.objects.filter(username=username).exists():
-             # If username exists, append a number
-            i = 1
-            while User.objects.filter(username=f"{username}{i}").exists():
-                i += 1
-            username = f"{username}{i}"
+        # Split full_name into first_name and last_name
+        name_parts = full_name.split(' ', 1)
+        first_name = name_parts[0]
+        last_name = name_parts[1] if len(name_parts) > 1 else ''
 
-        user = User.objects.create_user(username=username, **validated_data)
-        user.full_name = full_name # Assign full_name after creation
-        user.save()
+        # Ensure a unique 'username' for AbstractUser
+        base_username = email.split('@')[0].replace('.', '_').replace('-', '_')
+        username = base_username
+        counter = 1
+        while User.objects.filter(username=username).exists():
+            username = f"{base_username}{counter}"
+            counter += 1
+
+        # Create the user using create_user method
+        # Pass remaining validated_data as extra_fields if any, but ensure email/password are explicit
+        user = User.objects.create_user(
+            email=email, # Pass email explicitly
+            password=password, # Pass password explicitly
+            first_name=first_name,
+            last_name=last_name,
+            username=username, # Pass unique username explicitly
+            **validated_data # Pass any remaining fields from validated_data
+        )
+        
+        # Assign full_name to the custom field (if your User model has it)
+        user.full_name = full_name 
+        user.save() # Save the user to persist full_name and other custom fields
+
         return user
 
-# This serializer is for fetching a user's profile, including their documents.
 class UserProfileSerializer(serializers.ModelSerializer):
-    # Use the imported DocumentSerializer for nested documents
-    # related_name='documents' in Document model maps to this field
-    documents = DocumentSerializer(many=True, read_only=True) 
+    documents = DocumentSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        # Include full_name as it's now in your User model
-        fields = ['id', 'email', 'full_name', 'documents', 'date_joined', 'last_login'] # MODIFIED FIELDS
-        read_only_fields = ['id', 'email', 'documents', 'date_joined', 'last_login']
+        fields = ['id', 'email', 'full_name', 'first_name', 'last_name', 'documents', 'date_joined', 'last_login']
+        read_only_fields = ['id', 'email', 'first_name', 'last_name', 'documents', 'date_joined', 'last_login']
+
+    def get_full_name(self, obj):
+        if obj.full_name:
+            return obj.full_name
+        return f"{obj.first_name} {obj.last_name}".strip()
